@@ -1,23 +1,28 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using minijam.Manager;
+using minijam.Scenes;
+using minijam.Scenes.GameScenes;
 using minijam.src.GameObjects.UI;
 using minijam.src.Manager;
-using minijam.src.Scenes.GameScenes;
 
-namespace minijam.Scenes.GameScenes
+namespace minijam.src.Scenes.GameScenes
 {
-    public class TitleScreen : Scene
+    public class GameOver : Scene
     {
-        public TitleScreen(SceneManager sceneManager):base(sceneManager){}
+        private string reason;
+        public GameOver(string reason, SceneManager sceneManager) : base(sceneManager)
+        {
+            this.reason = reason;
+        }
 
         public override void Initialize()
         {
             CameraManager.UpdateCameraPosition(new Vector2(1280/2,720/2));
-            
             var font = AssetManager.Load<SpriteFont>("Fonts/GameFont");
-            gameObjects.Add(new TextRenderer("A Tale of Flesh & Fur", 100, 250,font, this));
-            gameObjects.Add(new TextRenderer("Press space to begin", 1, 350, Color.Red, font, this));
+            gameObjects.Add(new TextRenderer("GAME OVER", 60, 200, Color.Red, font, this));
+            gameObjects.Add(new TextRenderer(reason, 60, 260, Color.OrangeRed, font, this));
+            gameObjects.Add(new TextRenderer("Press space to continue", 1, 400, font, this));
         }
 
         public override void Notify(string sender)
@@ -26,7 +31,7 @@ namespace minijam.Scenes.GameScenes
             {
                 case "Continue":
                     sceneManager.ChangeScene(
-                        new StoryScreen(sceneManager)
+                        new TitleScreen(sceneManager)
                     );
                     break;
             }

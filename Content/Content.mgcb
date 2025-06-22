@@ -69,6 +69,12 @@
 /processorParam:Quality=Best
 /build:Sounds/shop.wav
 
+#begin Sounds/shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/shot.wav
+
 #begin Sounds/splash2.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -86,6 +92,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Background/Untitled.jpg;Sprites/Background/Bgm.jpg
+
+#begin Sprites/Circle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Circle.png
+
+#begin Sprites/human.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/human.png
 
 #begin Sprites/Icons/Brain.png
 /importer:TextureImporter

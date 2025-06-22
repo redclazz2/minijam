@@ -1,0 +1,117 @@
+using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using minijam.Scenes;
+using minijam.src.Interfaces.GameObject;
+
+namespace minijam.src.GameObjects.NPC
+{
+    public class Person : AGameObject
+    {
+        public Texture2D sprite;
+        public Texture2D circleSprite;
+        public Color color;
+        public Vector2 position;
+        public Vector2 homePosition;
+        public Vector2 targetPosition;
+        public bool occupied = false;
+        public float detectionRadius = 60f;
+
+        private bool atTrap = false;
+        private float waitTime;
+        private float waitTimer;
+
+        public bool isDone = false;
+
+        public SoundEffect screamSound;
+
+        float speed = 60f;
+
+        public Person(
+            Vector2 homePosition,
+            Vector2 baseTrapPosition,
+            Texture2D circleSprite,
+            Scene scene) : base(scene)
+        {
+            this.circleSprite = circleSprite;
+            this.homePosition = homePosition;
+            position = homePosition;
+
+            var offset = new Vector2(
+                Random.Shared.Next(-25, 25),
+                Random.Shared.Next(-25, 25)
+            );
+
+            detectionRadius += Random.Shared.Next(10, 30);
+            speed += Random.Shared.Next(10, 30);
+            targetPosition = baseTrapPosition + offset;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(sprite,
+                new Vector2(position.X - sprite.Width / 2f, position.Y - sprite.Height / 2f),
+                occupied ? Color.Blue : Color.OrangeRed
+            );
+
+            if (!occupied)
+            {
+                float scale = (detectionRadius * 2) / circleSprite.Width;
+
+                spriteBatch.Draw(
+                    circleSprite,
+                    new Vector2(position.X - detectionRadius, position.Y - detectionRadius),
+                    null,
+                    Color.Red * 0.3f, // Semi-transparent red
+                    0f,
+                    Vector2.Zero,
+                    scale,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (atTrap)
+            {
+                waitTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (waitTimer >= waitTime)
+                {
+                    targetPosition = homePosition;
+                    atTrap = false;
+                    occupied = false;
+                }
+
+                return;
+            }
+
+            Vector2 direction = targetPosition - position;
+            if (direction.Length() < 1f)
+            {
+                position = targetPosition;
+
+                if (targetPosition == homePosition)
+                {
+                    isDone = true;
+                }
+                else
+                {
+                    atTrap = true;
+                    occupied = true;
+                    waitTime = 2f + (float)new Random().NextDouble() * 2.0f;
+                    waitTimer = 0f;
+                }
+            }
+            else
+            {
+                direction.Normalize();
+                position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
+    }
+}
