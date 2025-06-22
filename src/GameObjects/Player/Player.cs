@@ -28,27 +28,33 @@ namespace minijam.src.GameObjects.Player
 
         public override void Update(GameTime gameTime)
         {
+            System.Console.WriteLine($"X: {position.X}");
+            System.Console.WriteLine($"Y: {position.Y}");
             CameraManager.UpdateCameraPosition(position);
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             
             if (kState.IsKeyDown(Keys.Right))
             {
+                if(position.X <= 1450)
                 position.X += speed * dt;
             }
 
             if (kState.IsKeyDown(Keys.Left))
             {
+                if(position.X >= - 140)
                 position.X -= speed * dt;
             }
 
             if (kState.IsKeyDown(Keys.Up))
             {
+                if(position.Y > -370)
                 position.Y -= speed * dt;
             }
 
             if (kState.IsKeyDown(Keys.Down))
             {
+                if(position.Y <= 1110)
                 position.Y += speed * dt;
             }
         }
