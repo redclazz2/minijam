@@ -17,7 +17,7 @@ namespace minijam.Scenes
             this.sceneManager = sceneManager;
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             foreach (var gameObject in gameObjects)
             {

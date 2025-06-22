@@ -9,8 +9,9 @@ namespace minijam.src.GameObjects.Player
 {
     public class Player : AGameObject
     {
+        public int radius = 45;
         private int speed = 210;
-        Vector2 position = new(200, 200);
+        public Vector2 position = new(200, 200);
         Texture2D sprite;
 
         public Player(Texture2D sprite, Scene scene) : base(scene)
@@ -28,6 +29,8 @@ namespace minijam.src.GameObjects.Player
 
         public override void Update(GameTime gameTime)
         {
+            //System.Console.WriteLine($"X: {position.X}");
+            //System.Console.WriteLine($"Y: {position.Y}");
             CameraManager.UpdateCameraPosition(position);
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;

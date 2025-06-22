@@ -12,7 +12,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR0
     distortedUV = saturate(distortedUV);
 
     // Stronger RGB channel offset (color fringing)
-    float2 offset = 0.003 * float2(sin(time * 6.0), cos(time * 4.0));
+    float2 offset = 0.0015 * float2(sin(time * 6.0), cos(time * 4.0));
 
     float r = tex2D(inputTexture, distortedUV + offset).r;
     float g = tex2D(inputTexture, distortedUV).g;
