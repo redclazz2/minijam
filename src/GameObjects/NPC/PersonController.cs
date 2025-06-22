@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using minijam.Scenes;
@@ -32,12 +30,11 @@ namespace minijam.src.GameObjects.NPC
                 var person = people[i];
                 person.Update(gameTime);
 
-                if (person.isDone)
+                if (person.isDone || person.isDead)
                 {
                     people.RemoveAt(i);
                 }
             }
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -50,12 +47,12 @@ namespace minijam.src.GameObjects.NPC
 
         public void TriggerTrap(Vector2 trapPosition)
         {
-            float baseChance = 0.4f;
+            float baseChance = 0.6f;
             float modifiedChance = MathHelper.Clamp(baseChance - GameStateManager.victims * 0.03f, 0.05f, 1f);
 
             if (random.NextDouble() < modifiedChance)
             {
-                int howMany = random.Next(1, 3);
+                int howMany = random.Next(1, 4);
                 for (int i = 0; i < howMany; i++)
                 {
                     var home = spawnPositions[random.Next(spawnPositions.Count)];
@@ -67,6 +64,5 @@ namespace minijam.src.GameObjects.NPC
                 }
             }
         }
-
     }
 }

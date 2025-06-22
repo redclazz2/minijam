@@ -12,5 +12,14 @@ namespace minijam.src.Manager
         // ---------RESET EVERY NIGHT---------------
         public static float nightTimer = 0f;
         public static int nightVictims = 0;
+
+        public static void Reset()
+        {
+            sanity = 100;
+            hunger = 50;
+            suspicion = 0;
+            victims = 0;
+            night = 1;
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using minijam.Scenes;
 using minijam.src.Interfaces.GameObject;
+using minijam.src.Manager;
 
 namespace minijam.src.GameObjects.NPC
 {
@@ -17,15 +18,12 @@ namespace minijam.src.GameObjects.NPC
         public Vector2 targetPosition;
         public bool occupied = false;
         public float detectionRadius = 60f;
-
         private bool atTrap = false;
         private float waitTime;
         private float waitTimer;
-
         public bool isDone = false;
-
+        public bool isDead = false;
         public SoundEffect screamSound;
-
         float speed = 60f;
 
         public Person(
@@ -43,8 +41,22 @@ namespace minijam.src.GameObjects.NPC
                 Random.Shared.Next(-25, 25)
             );
 
-            detectionRadius += Random.Shared.Next(10, 30);
-            speed += Random.Shared.Next(10, 30);
+            detectionRadius += Random.Shared.Next(15, 40);
+
+            if (GameStateManager.suspicion >= 75)
+            {
+                detectionRadius += Random.Shared.Next(40, 70);
+            }
+            else if (GameStateManager.suspicion >= 50)
+            {
+                detectionRadius += Random.Shared.Next(25, 50);
+            }
+            else if (GameStateManager.suspicion >= 25)
+            {
+                detectionRadius += Random.Shared.Next(10, 30);
+            }
+
+            speed += Random.Shared.Next(15, 35);
             targetPosition = baseTrapPosition + offset;
         }
 
@@ -57,13 +69,13 @@ namespace minijam.src.GameObjects.NPC
 
             if (!occupied)
             {
-                float scale = (detectionRadius * 2) / circleSprite.Width;
+                float scale = detectionRadius * 2 / circleSprite.Width;
 
                 spriteBatch.Draw(
                     circleSprite,
                     new Vector2(position.X - detectionRadius, position.Y - detectionRadius),
                     null,
-                    Color.Red * 0.3f, // Semi-transparent red
+                    Color.Red,
                     0f,
                     Vector2.Zero,
                     scale,
@@ -112,6 +124,5 @@ namespace minijam.src.GameObjects.NPC
                 position += direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
         }
-
     }
 }

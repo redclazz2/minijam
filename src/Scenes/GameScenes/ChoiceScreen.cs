@@ -53,6 +53,9 @@ namespace minijam.src.Scenes.GameScenes
                     break;
 
                 case "Resist":
+                    sceneManager.ChangeScene(
+                        new EndNightScreen("What a peaceful night ... ",sceneManager)
+                    );
                     break;
             }
         }

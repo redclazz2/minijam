@@ -63,6 +63,18 @@
 /processorParam:Quality=Best
 /build:Sounds/fire.wav
 
+#begin Sounds/Scream/femaleScream.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Scream/femaleScream.wav
+
+#begin Sounds/Scream/maleScream.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Scream/maleScream.wav
+
 #begin Sounds/shop.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

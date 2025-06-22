@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -11,6 +12,7 @@ using minijam.src.GameObjects.NPC;
 using minijam.src.GameObjects.Player;
 using minijam.src.GameObjects.Traps;
 using minijam.src.GameObjects.UI;
+using minijam.src.Manager;
 
 namespace minijam.src.Scenes.GameScenes
 {
@@ -21,8 +23,32 @@ namespace minijam.src.Scenes.GameScenes
         private NightTimerTextRenderer nightTimerTextRenderer;
         private Song ambience;
         private SoundEffect shotgun;
-
+        private List<SoundEffect> screams = [];
         private PersonController personController;
+        private Random random = new Random();
+        private List<string> endNightMessages = new()
+        {
+            "Their blood still warms your breath.",
+            "The screams faded... but you remember each one.",
+            "You ate well tonight. Too well.",
+            "The taste of fear clings to your teeth.",
+            "Their eyes still haunt you, wide and pleading.",
+            "The village is quieter now. Too quiet.",
+            "You buried the bodies. Not the guilt.",
+            "You hunger less. They exist less.",
+            "You killed again. And it felt good.",
+            "Someone will miss them. But not yet.",
+            "You smiled when they begged. You're not sure why.",
+            "Their voices echo in your head. You hush them.",
+            "You told yourself it was survival. You're lying.",
+            "Their flesh fed your stomach. Their death fed something deeper.",
+            "How many more before you're full?",
+            "The dirt outside their homes is disturbed now.",
+            "One day, someone will find the bones.",
+            "The village is starting to suspect. You don't care.",
+            "You licked your fingers. You couldn't help it.",
+            "Each death made the night quieter. You liked that."
+        };
 
         public EatScreen(SceneManager sceneManager) : base(sceneManager)
         {
@@ -34,7 +60,7 @@ namespace minijam.src.Scenes.GameScenes
 
             //Night Timer UI
             var font = AssetManager.Load<SpriteFont>("Fonts/GameFont");
-            gameObjects.Add(new NightTimer(35, this));
+            gameObjects.Add(new NightTimer(5, this));
             nightTimerTextRenderer = new NightTimerTextRenderer("1 AM", 0, 0, font, this);
             gameObjects.Add(nightTimerTextRenderer);
 
@@ -67,6 +93,9 @@ namespace minijam.src.Scenes.GameScenes
                 this
             );
             gameObjects.Add(personController);
+
+            screams.Add(AssetManager.Load<SoundEffect>("Sounds/Scream/maleScream"));
+            screams.Add(AssetManager.Load<SoundEffect>("Sounds/Scream/femaleScream"));
 
             //Spawn the player
             var playerSprite = AssetManager.Load<Texture2D>("Sprites/Wolf");
@@ -112,13 +141,23 @@ namespace minijam.src.Scenes.GameScenes
             foreach (Person p in personController.people)
             {
                 //float sum = p.detectionRadius;
-                if (Vector2.Distance(player.position, p.position) < p.detectionRadius && !p.occupied)
+                if (Vector2.Distance(player.position, p.position) < p.detectionRadius)
                 {
-                    MediaPlayer.Stop();
-                    shotgun.Play();
-                    sceneManager.ChangeScene(
-                        new GameOver("You've been killed", sceneManager)
-                    );
+                    if (!p.occupied)
+                    {
+                        MediaPlayer.Stop();
+                        shotgun.Play();
+                        sceneManager.ChangeScene(
+                            new GameOver("You've been killed", sceneManager)
+                        );
+                    }
+                    else if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        var scream = screams[random.Next(screams.Count)];
+                        scream.Play();
+                        p.isDead = true;
+                        GameStateManager.nightVictims++;
+                    }
                 }
             }
         }
@@ -145,9 +184,16 @@ namespace minijam.src.Scenes.GameScenes
             }
         }
 
-        private void FinishNight() {
-            //System.Console.WriteLine("FINISHED!");
+        private void FinishNight()
+        {
             MediaPlayer.Stop();
+
+            string message = endNightMessages[random.Next(endNightMessages.Count)];
+
+            sceneManager.ChangeScene(
+                new EndNightScreen(message, sceneManager)
+            );
         }
+
     }
 }

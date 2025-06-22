@@ -13,6 +13,7 @@ namespace minijam.Scenes.GameScenes
 
         public override void Initialize()
         {
+            GameStateManager.Reset();
             CameraManager.UpdateCameraPosition(new Vector2(1280/2,720/2));
             
             var font = AssetManager.Load<SpriteFont>("Fonts/GameFont");
