@@ -13,9 +13,16 @@ namespace minijam.src.GameObjects.UI
         int awaitTime = 0;
         string text;
         Color color = Color.White;
-        double y;
+        protected double y;
 
-        float x = 1280 / 2;
+        protected float x = 1280 / 2;
+
+        public string Text
+        {
+            get { return text; }
+            set { text = value; }
+        }
+
 
         public TextRenderer(string text, int awaitTime, double y, SpriteFont gameFont, Scene scene) : base(scene)
         {

@@ -9,7 +9,7 @@ namespace minijam.src.GameObjects.Player
 {
     public class Player : AGameObject
     {
-        private int speed = 300;
+        private int speed = 210;
         Vector2 position = new(200, 200);
         Texture2D sprite;
 
@@ -28,31 +28,29 @@ namespace minijam.src.GameObjects.Player
 
         public override void Update(GameTime gameTime)
         {
-            System.Console.WriteLine($"X: {position.X}");
-            System.Console.WriteLine($"Y: {position.Y}");
             CameraManager.UpdateCameraPosition(position);
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             
-            if (kState.IsKeyDown(Keys.Right))
+            if (kState.IsKeyDown(Keys.D))
             {
                 if(position.X <= 1450)
                 position.X += speed * dt;
             }
 
-            if (kState.IsKeyDown(Keys.Left))
+            if (kState.IsKeyDown(Keys.A))
             {
                 if(position.X >= - 140)
                 position.X -= speed * dt;
             }
 
-            if (kState.IsKeyDown(Keys.Up))
+            if (kState.IsKeyDown(Keys.W))
             {
                 if(position.Y > -370)
                 position.Y -= speed * dt;
             }
 
-            if (kState.IsKeyDown(Keys.Down))
+            if (kState.IsKeyDown(Keys.S))
             {
                 if(position.Y <= 1110)
                 position.Y += speed * dt;
