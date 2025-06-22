@@ -7,7 +7,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR0
 {
     // Stronger barrel distortion
     float2 centeredUV = uv * 2.0 - 1.0;
-    float2 distortedUV = centeredUV + 0.2 * centeredUV * float2(centeredUV.y * centeredUV.y, centeredUV.x * centeredUV.x);
+    float2 distortedUV = centeredUV + 0.1 * centeredUV * float2(centeredUV.y * centeredUV.y, centeredUV.x * centeredUV.x);
     distortedUV = (distortedUV + 1.0) / 2.0;
     distortedUV = saturate(distortedUV);
 

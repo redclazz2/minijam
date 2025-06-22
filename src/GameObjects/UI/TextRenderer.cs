@@ -15,6 +15,8 @@ namespace minijam.src.GameObjects.UI
         Color color = Color.White;
         double y;
 
+        float x = 1280 / 2;
+
         public TextRenderer(string text, int awaitTime, double y, SpriteFont gameFont, Scene scene) : base(scene)
         {
             this.gameFont = gameFont;
@@ -32,11 +34,20 @@ namespace minijam.src.GameObjects.UI
             this.y = y;
         }
 
+        public TextRenderer(string text, int awaitTime, float x, double y, Color color, SpriteFont gameFont, Scene scene) : base(scene)
+        {
+            this.gameFont = gameFont;
+            this.text = text;
+            this.awaitTime = awaitTime;
+            this.color = color;
+            this.x = x;
+            this.y = y;
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             Vector2 sizeOfText = gameFont.MeasureString(text);
-            int hW = 1280 / 2;
-            spriteBatch.DrawString(gameFont, text, new Vector2(hW - sizeOfText.X / 2, (float)y), color);
+            spriteBatch.DrawString(gameFont, text, new Vector2(x - sizeOfText.X / 2, (float)y), color);
         }
 
         public override void Update(GameTime gameTime)

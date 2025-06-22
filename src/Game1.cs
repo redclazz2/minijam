@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using minijam.Manager;
 using minijam.Scenes;
 using minijam.Scenes.GameScenes;
+using Comora;
+using minijam.src.Manager;
 
 namespace minijam;
 
@@ -24,6 +26,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        CameraManager.Initialize(_graphics.GraphicsDevice);
         AssetManager.Initialize(Content);
         sceneManager = new();
         var scene = new TitleScreen(sceneManager);
@@ -33,9 +36,12 @@ public class Game1 : Game
         _graphics.PreferredBackBufferHeight = 720;
         _graphics.ApplyChanges();
 
+        Window.Title = "A Tale of Flesh & Fur";
+
         renderTarget = new RenderTarget2D(GraphicsDevice,
-GraphicsDevice.PresentationParameters.BackBufferWidth,
-GraphicsDevice.PresentationParameters.BackBufferHeight);
+            GraphicsDevice.PresentationParameters.BackBufferWidth,
+            GraphicsDevice.PresentationParameters.BackBufferHeight
+        );
 
         base.Initialize();
     }
@@ -50,7 +56,7 @@ GraphicsDevice.PresentationParameters.BackBufferHeight);
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
+        CameraManager.camera.Update(gameTime);
         sceneManager.Update(gameTime);
 
         base.Update(gameTime);
@@ -62,7 +68,7 @@ GraphicsDevice.PresentationParameters.BackBufferHeight);
         GraphicsDevice.SetRenderTarget(renderTarget);
         GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(CameraManager.camera);
         sceneManager.Draw(_spriteBatch);
         _spriteBatch.End();
 

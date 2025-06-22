@@ -33,7 +33,7 @@ namespace minijam.src.Scenes.GameScenes
 
             gameObjects.Add(new TextRenderer(
                 "Press space to continue",
-                3,
+                1,
                 460,
                 Color.Yellow,
                 font,
