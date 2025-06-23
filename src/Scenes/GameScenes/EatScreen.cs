@@ -28,26 +28,25 @@ namespace minijam.src.Scenes.GameScenes
         private Random random = new Random();
         private List<string> endNightMessages = new()
         {
-            "Their blood still warms your breath.",
-            "The screams faded... but you remember each one.",
-            "You ate well tonight. Too well.",
-            "The taste of fear clings to your teeth.",
-            "Their eyes still haunt you, wide and pleading.",
-            "The village is quieter now. Too quiet.",
-            "You buried the bodies. Not the guilt.",
-            "You hunger less. They exist less.",
-            "You killed again. And it felt good.",
-            "Someone will miss them. But not yet.",
-            "You smiled when they begged. You're not sure why.",
-            "Their voices echo in your head. You hush them.",
-            "You told yourself it was survival. You're lying.",
-            "Their flesh fed your stomach. Their death fed something deeper.",
-            "How many more before you're full?",
-            "The dirt outside their homes is disturbed now.",
-            "One day, someone will find the bones.",
-            "The village is starting to suspect. You don't care.",
-            "You licked your fingers. You couldn't help it.",
-            "Each death made the night quieter. You liked that."
+            "You knew their name.",
+            "They were kind to you once.",
+            "You saw the fear in their eyes and didn't stop.",
+            "Their laughter used to echo through the village.",
+            "You told yourself you had no choice. Lier.",
+            "You remember their smile as you tore them apart.",
+            "They trusted you.",
+            "One of them waved at you earlier that day.",
+            "You knew their home. You walked past it for years.",
+            "You dug the grave with shaking hands.",
+            "You see their face when you close your eyes.",
+            "They were someone's child. Someone's parent. Someone.",
+            "You whispered sorry. It wasn't enough.",
+            "The blood won't come off.",
+            "You waited until they were alone. You coward.",
+            "You thought it was survival. It felt like betrayal.",
+            "Their voice cracked when they begged.",
+            "You remember when you used to care.",
+            "It was supposed to get easier. It hasn't."
         };
 
         public EatScreen(SceneManager sceneManager) : base(sceneManager)
@@ -58,9 +57,14 @@ namespace minijam.src.Scenes.GameScenes
             var villageSprite = AssetManager.Load<Texture2D>("Sprites/Village");
             gameObjects.Add(new SpriteRenderer(new Vector2(1280 / 2, 720 / 2), villageSprite, this));
 
+            //Spawn the player
+            var playerSprite = AssetManager.Load<Texture2D>("Sprites/Wolf");
+            player = new Player(playerSprite, this);
+            gameObjects.Add(player);
+
             //Night Timer UI
             var font = AssetManager.Load<SpriteFont>("Fonts/GameFont");
-            gameObjects.Add(new NightTimer(5, this));
+            gameObjects.Add(new NightTimer(40, this));
             nightTimerTextRenderer = new NightTimerTextRenderer("1 AM", 0, 0, font, this);
             gameObjects.Add(nightTimerTextRenderer);
 
@@ -96,11 +100,6 @@ namespace minijam.src.Scenes.GameScenes
 
             screams.Add(AssetManager.Load<SoundEffect>("Sounds/Scream/maleScream"));
             screams.Add(AssetManager.Load<SoundEffect>("Sounds/Scream/femaleScream"));
-
-            //Spawn the player
-            var playerSprite = AssetManager.Load<Texture2D>("Sprites/Wolf");
-            player = new Player(playerSprite, this);
-            gameObjects.Add(player);
         }
 
         public override void Initialize()
@@ -188,7 +187,11 @@ namespace minijam.src.Scenes.GameScenes
         {
             MediaPlayer.Stop();
 
-            string message = endNightMessages[random.Next(endNightMessages.Count)];
+            string message =
+            GameStateManager.nightVictims > 0 ?
+            endNightMessages[random.Next(endNightMessages.Count)] :
+            "What a peaceful night ... "
+            ;
 
             sceneManager.ChangeScene(
                 new EndNightScreen(message, sceneManager)
