@@ -27,7 +27,7 @@ namespace minijam.src.GameObjects.Traps
         {
             if (drawStatus)
             {
-                if (cooldown == 15)
+                if (cooldown == 16)
                 {
                     var message = "Press Space";
                     Vector2 sizeOfText = spriteFont.MeasureString(message);
@@ -60,7 +60,7 @@ namespace minijam.src.GameObjects.Traps
 
                 if (cooldown <= 0)
                 {
-                    cooldown = 15;
+                    cooldown = 16;
                     update = false;
                 }
             }
