@@ -29,34 +29,29 @@ namespace minijam.src.GameObjects.Player
 
         public override void Update(GameTime gameTime)
         {
-            //System.Console.WriteLine($"X: {position.X}");
-            //System.Console.WriteLine($"Y: {position.Y}");
             CameraManager.UpdateCameraPosition(position);
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
-            if (kState.IsKeyDown(Keys.D))
-            {
-                if(position.X <= 1450)
-                position.X += speed * dt;
-            }
 
-            if (kState.IsKeyDown(Keys.A))
-            {
-                if(position.X >= - 140)
-                position.X -= speed * dt;
-            }
+            Vector2 direction = Vector2.Zero;
 
-            if (kState.IsKeyDown(Keys.W))
-            {
-                if(position.Y > -370)
-                position.Y -= speed * dt;
-            }
+            if (kState.IsKeyDown(Keys.D)) direction.X += 1;
+            if (kState.IsKeyDown(Keys.A)) direction.X -= 1;
+            if (kState.IsKeyDown(Keys.W)) direction.Y -= 1;
+            if (kState.IsKeyDown(Keys.S)) direction.Y += 1;
 
-            if (kState.IsKeyDown(Keys.S))
+            if (direction != Vector2.Zero)
             {
-                if(position.Y <= 1110)
-                position.Y += speed * dt;
+                direction.Normalize();
+                Vector2 movement = direction * speed * dt;
+
+                Vector2 nextPos = position + movement;
+
+                if (nextPos.X >= -140 && nextPos.X <= 1450)
+                    position.X = nextPos.X;
+
+                if (nextPos.Y >= -370 && nextPos.Y <= 1110)
+                    position.Y = nextPos.Y;
             }
         }
     }

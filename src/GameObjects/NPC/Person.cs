@@ -18,13 +18,14 @@ namespace minijam.src.GameObjects.NPC
         public Vector2 targetPosition;
         public bool occupied = false;
         public float detectionRadius = 62f;
+        public float killInteractionRadius = 40;
         private bool atTrap = false;
         private float waitTime;
         private float waitTimer;
         public bool isDone = false;
         public bool isDead = false;
         public SoundEffect screamSound;
-        float speed = 60f;
+        protected float speed = 60f;
         private bool isFlashing = false;
         private float flashTimer = 0f;
         private float flashDuration = 0.85f;

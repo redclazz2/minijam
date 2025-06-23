@@ -150,7 +150,9 @@ namespace minijam.src.Scenes.GameScenes
                             new GameOver("You've been killed", sceneManager)
                         );
                     }
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    else if (Keyboard.GetState().IsKeyDown(Keys.Space)
+                        && Vector2.Distance(player.position, p.position) < p.killInteractionRadius
+                    )
                     {
                         var scream = screams[random.Next(screams.Count)];
                         scream.Play();

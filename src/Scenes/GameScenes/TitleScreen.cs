@@ -14,11 +14,13 @@ namespace minijam.Scenes.GameScenes
         public override void Initialize()
         {
             GameStateManager.Reset();
-            CameraManager.UpdateCameraPosition(new Vector2(1280/2,720/2));
-            
+            CameraManager.UpdateCameraPosition(new Vector2(1280 / 2, 720 / 2));
+
             var font = AssetManager.Load<SpriteFont>("Fonts/GameFont");
-            gameObjects.Add(new TextRenderer("A Tale of Flesh & Fur", 100, 250,font, this));
+            gameObjects.Add(new TextRenderer("A Tale of Flesh & Fur", 100, 250, font, this));
             gameObjects.Add(new TextRenderer("Press space to begin", 1, 350, Color.Red, font, this));
+            
+            gameObjects.Add(new TextRenderer("V.1.1.0", 1, 650, Color.Gray, font, this));
         }
 
         public override void Notify(string sender)

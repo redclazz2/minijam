@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using minijam.Scenes;
+using minijam.src.GameObjects.NPC.Factory;
 using minijam.src.Interfaces.GameObject;
 using minijam.src.Manager;
 
@@ -48,7 +49,7 @@ namespace minijam.src.GameObjects.NPC
         public void TriggerTrap(Vector2 trapPosition)
         {
             float baseChance = 0.6f;
-            float modifiedChance = MathHelper.Clamp(baseChance - GameStateManager.victims * 0.03f, 0.05f, 1f);
+            float modifiedChance = MathHelper.Clamp(baseChance - GameStateManager.victims * 0.03f, 0.4f, 1f);
 
             if (random.NextDouble() < modifiedChance)
             {
@@ -56,13 +57,16 @@ namespace minijam.src.GameObjects.NPC
                 for (int i = 0; i < howMany; i++)
                 {
                     var home = spawnPositions[random.Next(spawnPositions.Count)];
-                    var person = new Person(home, trapPosition, circleSprite, scene)
-                    {
-                        sprite = personSprite
-                    };
+
+                    string behavior = random.NextDouble() < 0.8 ? "Regular" : "Wandering";
+
+                    var person = PersonFactory.CreatePerson(behavior, home, trapPosition, circleSprite, scene);
+                    person.sprite = personSprite;
+
                     people.Add(person);
                 }
             }
         }
+
     }
 }
