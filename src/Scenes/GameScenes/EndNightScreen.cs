@@ -42,9 +42,9 @@ namespace minijam.src.Scenes.GameScenes
                     }
                     else
                     {
-                        GameStateManager.sanity = MathHelper.Clamp(GameStateManager.sanity - victims * 5, 0, 100);
+                        GameStateManager.sanity = MathHelper.Clamp(GameStateManager.sanity - victims * 2, 0, 100);
                         GameStateManager.suspicion = MathHelper.Clamp(GameStateManager.suspicion + victims * 8, 0, 100);
-                        GameStateManager.hunger = MathHelper.Clamp(GameStateManager.hunger + victims * 5, 0, 100);
+                        GameStateManager.hunger = MathHelper.Clamp(GameStateManager.hunger + victims * 4, 0, 100);
                     }
 
                     GameStateManager.victims += victims;

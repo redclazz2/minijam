@@ -64,7 +64,7 @@ namespace minijam.src.Scenes.GameScenes
 
             //Night Timer UI
             var font = AssetManager.Load<SpriteFont>("Fonts/GameFont");
-            gameObjects.Add(new NightTimer(30, this));
+            gameObjects.Add(new NightTimer(25, this));
             nightTimerTextRenderer = new NightTimerTextRenderer("1 AM", 0, 0, font, this);
             gameObjects.Add(nightTimerTextRenderer);
 
