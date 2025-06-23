@@ -38,11 +38,11 @@ namespace minijam.src.Scenes.GameScenes
                     {
                         GameStateManager.sanity = MathHelper.Clamp(GameStateManager.sanity + 12, 0, 100);
                         GameStateManager.suspicion = MathHelper.Clamp(GameStateManager.suspicion - 16, 0, 100);
-                        GameStateManager.hunger = MathHelper.Clamp(GameStateManager.hunger - 15, 0, 100);
+                        GameStateManager.hunger = MathHelper.Clamp(GameStateManager.hunger - 30, 0, 100);
                     }
                     else
                     {
-                        GameStateManager.sanity = MathHelper.Clamp(GameStateManager.sanity - victims * 6, 0, 100);
+                        GameStateManager.sanity = MathHelper.Clamp(GameStateManager.sanity - victims * 5, 0, 100);
                         GameStateManager.suspicion = MathHelper.Clamp(GameStateManager.suspicion + victims * 8, 0, 100);
                         GameStateManager.hunger = MathHelper.Clamp(GameStateManager.hunger + victims * 5, 0, 100);
                     }

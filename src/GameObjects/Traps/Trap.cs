@@ -12,7 +12,7 @@ namespace minijam.src.GameObjects.Traps
         private SpriteFont spriteFont;
         public int radius = 45;
         public bool update = false;
-        private double cooldown = 15;
+        private double cooldown = 16;
         public bool drawStatus = false;
         public SoundEffect soundEffect;
 
