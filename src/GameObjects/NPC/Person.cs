@@ -17,7 +17,7 @@ namespace minijam.src.GameObjects.NPC
         public Vector2 homePosition;
         public Vector2 targetPosition;
         public bool occupied = false;
-        public float detectionRadius = 60f;
+        public float detectionRadius = 62f;
         private bool atTrap = false;
         private float waitTime;
         private float waitTimer;
@@ -25,6 +25,11 @@ namespace minijam.src.GameObjects.NPC
         public bool isDead = false;
         public SoundEffect screamSound;
         float speed = 60f;
+        private bool isFlashing = false;
+        private float flashTimer = 0f;
+        private float flashDuration = 0.85f;
+        private float colorSwapTimer = 0f;
+        private float colorSwapInterval = 0.08f;
 
         public Person(
             Vector2 homePosition,
@@ -32,6 +37,8 @@ namespace minijam.src.GameObjects.NPC
             Texture2D circleSprite,
             Scene scene) : base(scene)
         {
+            color = Color.OrangeRed;
+
             this.circleSprite = circleSprite;
             this.homePosition = homePosition;
             position = homePosition;
@@ -56,7 +63,7 @@ namespace minijam.src.GameObjects.NPC
                 detectionRadius += Random.Shared.Next(10, 30);
             }
 
-            speed += Random.Shared.Next(15, 35);
+            speed += Random.Shared.Next(15, 40);
             targetPosition = baseTrapPosition + offset;
         }
 
@@ -64,7 +71,7 @@ namespace minijam.src.GameObjects.NPC
         {
             spriteBatch.Draw(sprite,
                 new Vector2(position.X - sprite.Width / 2f, position.Y - sprite.Height / 2f),
-                occupied ? Color.Blue : Color.OrangeRed
+                color
             );
 
             if (!occupied)
@@ -89,13 +96,37 @@ namespace minijam.src.GameObjects.NPC
         {
             if (atTrap)
             {
+                color = Color.Blue;
                 waitTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                if (waitTimer >= waitTime)
+                if (!isFlashing && waitTimer >= waitTime)
                 {
-                    targetPosition = homePosition;
-                    atTrap = false;
-                    occupied = false;
+                    isFlashing = true;
+                    flashTimer = 0f;
+                    colorSwapTimer = 0f;
+                }
+
+                if (isFlashing)
+                {
+                    flashTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    colorSwapTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (colorSwapTimer >= colorSwapInterval)
+                    {
+                        color = (color == Color.Blue ? Color.Red : Color.Blue);
+                        colorSwapTimer = 0f;
+                    }
+
+                    if (flashTimer >= flashDuration)
+                    {
+                        isFlashing = false;
+                        atTrap = false;
+                        occupied = false;
+                        targetPosition = homePosition;
+                        color = Color.OrangeRed; // Reset to default
+                    }
+
+                    return;
                 }
 
                 return;

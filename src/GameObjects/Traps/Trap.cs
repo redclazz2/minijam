@@ -10,7 +10,7 @@ namespace minijam.src.GameObjects.Traps
     {
         public Vector2 position;
         private SpriteFont spriteFont;
-        public int radius = 45;
+        public int radius = 50;
         public bool update = false;
         private double cooldown = 16;
         public bool drawStatus = false;
@@ -34,7 +34,7 @@ namespace minijam.src.GameObjects.Traps
                     spriteBatch.DrawString(
                         spriteFont,
                         message,
-                        new Vector2(position.X - sizeOfText.X / 2, position.Y - 120),
+                        new Vector2(position.X - sizeOfText.X / 2, position.Y - 130),
                         Color.White
                     );
                 }
@@ -45,7 +45,7 @@ namespace minijam.src.GameObjects.Traps
                     spriteBatch.DrawString(
                         spriteFont,
                         message,
-                        new Vector2(position.X - sizeOfText.X / 2, position.Y - 120),
+                        new Vector2(position.X - sizeOfText.X / 2, position.Y - 130),
                         Color.White
                     );
                 }
