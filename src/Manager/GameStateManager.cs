@@ -20,6 +20,8 @@ namespace minijam.src.Manager
             suspicion = 0;
             victims = 0;
             night = 1;
+            nightTimer = 0f;
+            nightVictims = 0;
         }
     }
 }

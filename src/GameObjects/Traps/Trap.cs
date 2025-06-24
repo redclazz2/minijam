@@ -12,7 +12,7 @@ namespace minijam.src.GameObjects.Traps
         private SpriteFont spriteFont;
         public int radius = 50;
         public bool update = false;
-        private double cooldown = 16;
+        private double cooldown = 20;
         public bool drawStatus = false;
         public SoundEffect soundEffect;
 
@@ -27,7 +27,7 @@ namespace minijam.src.GameObjects.Traps
         {
             if (drawStatus)
             {
-                if (cooldown == 16)
+                if (cooldown == 20)
                 {
                     var message = "Press Space";
                     Vector2 sizeOfText = spriteFont.MeasureString(message);
@@ -60,7 +60,7 @@ namespace minijam.src.GameObjects.Traps
 
                 if (cooldown <= 0)
                 {
-                    cooldown = 16;
+                    cooldown = 20;
                     update = false;
                 }
             }

@@ -12,7 +12,7 @@ namespace minijam.src.GameObjects.NPC.Factory
             return behavior switch
             {
                 "Regular" => new Person(startPos,trap,circleSprite,scene),
-                "Wandering" => new WanderingPerson(startPos, circleSprite, scene),
+                "Wandering" => new WanderingPerson(startPos, trap, circleSprite, scene),
                 _ => throw new Exception("Unsupported behavior")
             };
         }

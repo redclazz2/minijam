@@ -28,7 +28,7 @@ namespace minijam.src.Scenes.GameScenes
 
             sanityVariator = MathHelper.Clamp(GameStateManager.sanity + (victims == 0 ? 12 : -victims * 2), 0, 100);
             suspicionVariator = MathHelper.Clamp(GameStateManager.suspicion + (victims == 0 ? -16 : victims * 8), 0, 100);
-            hungerVariator = MathHelper.Clamp(GameStateManager.hunger + (victims == 0 ? -30 : victims * 4), 0, 100);
+            hungerVariator = MathHelper.Clamp(GameStateManager.hunger + (victims == 0 ? -40 : victims * 4), 0, 100);
 
             int sanityDelta = sanityVariator - GameStateManager.sanity;
             int suspicionDelta = suspicionVariator - GameStateManager.suspicion;

@@ -9,11 +9,13 @@ namespace minijam.Scenes.GameScenes
 {
     public class TitleScreen : Scene
     {
-        public TitleScreen(SceneManager sceneManager):base(sceneManager){}
+        public TitleScreen(SceneManager sceneManager) : base(sceneManager)
+        {
+            GameStateManager.Reset();
+        }
 
         public override void Initialize()
         {
-            GameStateManager.Reset();
             CameraManager.UpdateCameraPosition(new Vector2(1280 / 2, 720 / 2));
 
             var font = AssetManager.Load<SpriteFont>("Fonts/GameFont");

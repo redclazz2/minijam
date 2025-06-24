@@ -49,24 +49,39 @@ namespace minijam.src.GameObjects.NPC
         public void TriggerTrap(Vector2 trapPosition)
         {
             float baseChance = 0.6f;
-            float modifiedChance = MathHelper.Clamp(baseChance - GameStateManager.victims * 0.03f, 0.4f, 1f);
+            float modifiedChance = MathHelper.Clamp(baseChance - GameStateManager.victims * 0.03f, 1f, 1f);
 
             if (random.NextDouble() < modifiedChance)
             {
                 int howMany = random.Next(1, 4);
+                bool forceWanderer = false;
+
+                if (GameStateManager.suspicion >= 50)
+                {
+                    forceWanderer = true;
+                    howMany = Math.Max(2, howMany);
+                }
+
                 for (int i = 0; i < howMany; i++)
                 {
                     var home = spawnPositions[random.Next(spawnPositions.Count)];
 
-                    string behavior = random.NextDouble() < 0.8 ? "Regular" : "Wandering";
+                    string behavior;
+
+                    if (forceWanderer)
+                    {
+                        behavior = (i == 0) ? "Wandering" : "Regular";
+                    }
+                    else
+                    {
+                        behavior = random.NextDouble() < 0.8 ? "Regular" : "Wandering";
+                    }
 
                     var person = PersonFactory.CreatePerson(behavior, home, trapPosition, circleSprite, scene);
                     person.sprite = personSprite;
-
                     people.Add(person);
                 }
             }
         }
-
     }
 }

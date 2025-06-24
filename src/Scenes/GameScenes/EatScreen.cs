@@ -71,10 +71,10 @@ namespace minijam.src.Scenes.GameScenes
             //Spawn all the traps
             var trapFont = AssetManager.Load<SpriteFont>("Fonts/TrapFont");
             traps.Add(new Trap(new Vector2(1030, 915), trapFont, AssetManager.Load<SoundEffect>("Sounds/shop"), this));
-            traps.Add(new Trap(new Vector2(245, 855), trapFont, AssetManager.Load<SoundEffect>("Sounds/farm"), this));
-            traps.Add(new Trap(new Vector2(540, 19), trapFont, AssetManager.Load<SoundEffect>("Sounds/fire"), this));
+            traps.Add(new Trap(new Vector2(230, 900), trapFont, AssetManager.Load<SoundEffect>("Sounds/farm"), this));
+            traps.Add(new Trap(new Vector2(640, 110), trapFont, AssetManager.Load<SoundEffect>("Sounds/fire"), this));
             traps.Add(new Trap(new Vector2(635, -275), trapFont, AssetManager.Load<SoundEffect>("Sounds/churchbell"), this));
-            traps.Add(new Trap(new Vector2(64, -110), trapFont, AssetManager.Load<SoundEffect>("Sounds/splash2"), this));
+            traps.Add(new Trap(new Vector2(80, -80), trapFont, AssetManager.Load<SoundEffect>("Sounds/splash2"), this));
 
             for (var i = 0; i < traps.Count; i++)
             {
